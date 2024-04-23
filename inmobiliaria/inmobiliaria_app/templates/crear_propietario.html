@@ -1,0 +1,84 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Propietario</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+            width: 100%; /* Ajusta el ancho al 100% */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Incluye el borde en el ancho */
+        }
+        .form-control-label,
+        .form-control-error {
+            color: #000; /* Color de texto negro */
+        }
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CREAR PROPIETARIO</h1>
+        <form action="{% url 'crear_propietario' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <span class="form-control-label">{{ form.nombre.label_tag }}</span>
+                {{ form.nombre|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.nombre.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.apellido.label_tag }}</span>
+                {{ form.apellido|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.apellido.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.celular.label_tag }}</span>
+                {{ form.celular|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.celular.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.cedula.label_tag }}</span>
+                {{ form.cedula|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.cedula.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.idedificios.label_tag }}</span>
+                {{ form.idedificios|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.idedificios.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.idcasas.label_tag }}</span>
+                {{ form.idcasas|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.idcasas.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.idfincas.label_tag }}</span>
+                {{ form.idfincas|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.idfincas.errors }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Propietario</button>
+        </form>
+    </div>
+</body>
+</html>

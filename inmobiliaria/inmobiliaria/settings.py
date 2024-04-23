@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inmobiliaria_app',
     'rest_framework',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

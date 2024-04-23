@@ -1,0 +1,74 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Casa</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-control-label,
+        .form-control-error {
+            color: #000; /* Color de texto negro */
+        }
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CREAR CASA</h1>
+        <form action="{% url 'crear_casa' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <span class="form-control-label">{{ form.barrio.label_tag }}</span>
+                {{ form.barrio|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.barrio.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.direccion.label_tag }}</span>
+                {{ form.direccion|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.direccion.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.numerohabitaciones.label_tag }}</span>
+                {{ form.numerohabitaciones|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.numerohabitaciones.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.añocontruccion.label_tag }}</span>
+                {{ form.añocontruccion|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.añocontruccion.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.tipocontruccion.label_tag }}</span>
+                {{ form.tipocontruccion|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.tipocontruccion.errors }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Casa</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Fincas</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        table {
+            background-color: #fff;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #000; /* Cambio del color del texto a negro */
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LISTA DE FINCAS</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tamaño del Terreno</th>
+                    <th>Actividad</th>
+                    <th>Infraestructura</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for finca in fincas %}
+                <tr>
+                    <td>{{ finca.nombre }}</td>
+                    <td>{{ finca.tamañoterreno }}</td>
+                    <td>{{ finca.actividad }}</td>
+                    <td>{{ finca.infraestructura }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

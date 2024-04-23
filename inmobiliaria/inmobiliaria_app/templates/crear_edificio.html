@@ -1,0 +1,74 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Edificio</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+            width: 100%; /* Ajusta el ancho al 100% */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Incluye el borde en el ancho */
+        }
+        .form-control-label,
+        .form-control-error {
+            color: #000; /* Color de texto negro */
+        }
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CREAR EDIFICIO</h1>
+        <form action="{% url 'crear_edificio' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <span class="form-control-label">{{ form.nombre.label_tag }}</span>
+                {{ form.nombre|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.nombre.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.direccion.label_tag }}</span>
+                {{ form.direccion|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.direccion.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.tipoedificio.label_tag }}</span>
+                {{ form.tipoedificio|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.tipoedificio.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.estadoedificio.label_tag }}</span>
+                {{ form.estadoedificio|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.estadoedificio.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.añoconstruccion.label_tag }}</span>
+                {{ form.añoconstruccion|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.añoconstruccion.errors }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Edificio</button>
+        </form>
+    </div>
+</body>
+</html>

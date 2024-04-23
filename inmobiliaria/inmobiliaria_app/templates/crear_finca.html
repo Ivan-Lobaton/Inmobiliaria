@@ -1,0 +1,69 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Finca</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+            width: 100%; /* Ajusta el ancho al 100% */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Incluye el borde en el ancho */
+        }
+        .form-control-label,
+        .form-control-error {
+            color: #000; /* Color de texto negro */
+        }
+        .btn-primary {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CREAR FINCA</h1>
+        <form action="{% url 'crear_finca' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <span class="form-control-label">{{ form.nombre.label_tag }}</span>
+                {{ form.nombre|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.nombre.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.tamañoterreno.label_tag }}</span>
+                {{ form.tamañoterreno|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.tamañoterreno.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.actividad.label_tag }}</span>
+                {{ form.actividad|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.actividad.errors }}</span>
+            </div>
+            <div>
+                <span class="form-control-label">{{ form.infraestructura.label_tag }}</span>
+                {{ form.infraestructura|attr:"class:form-control" }}
+                <span class="form-control-error">{{ form.infraestructura.errors }}</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Finca</button>
+        </form>
+    </div>
+</body>
+</html>

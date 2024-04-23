@@ -1,183 +1,82 @@
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from rest_framework.response import Response
 from inmobiliaria_app.admin import Edificios, Casas, Fincas, Propietarios
 from inmobiliaria_app.api.serializers import EdificioSerializer, CasasSerializer, FincasSerializer, PropietariosSerializer
 
 from rest_framework.views import APIView
 from rest_framework import status
+from inmobiliaria_app.models import Edificios, Casas, Fincas, Propietarios
+from inmobiliaria_app.api.forms import EdificiosForm, CasasForm, FincasForm, PropietariosForm
 
-class EdificiosAV(APIView):
+class EdificiosLiveView(APIView):
     def get(self, request):
         edificios = Edificios.objects.all()
-        serializer = EdificioSerializer(edificios, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = EdificioSerializer(edificios, many=True)
+        return render(request, 'edificios.html', {'edificios': serializer.data})
+    
+class EdificiosCreateView(APIView):
+    def get(self, request):
+        form = EdificiosForm()
+        return render(request, 'crear_edificio.html', {'form': form})
     
     def post(self, request):
-        serializer = EdificioSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class EdificiosDetalleAV(APIView):
-    def get(self, request, pk):
-        try:
-            edificios = Edificios.objects.get(pk=pk)
-        except Edificios.DoesNotExist:
-            return Response({'error': 'Edificio no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = EdificioSerializer(edificios, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        form = EdificiosForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/portal/edificios/')
+        return render(request, 'crear_edificio.html', {'form': form})
     
-    def put(self, request, pk):
-        try:
-            edificios = Edificios.objects.get(pk=pk)
-        except Edificios.DoesNotExist:
-            return Response({'error': 'Edificio no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = EdificioSerializer(edificios, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, pk):
-        try:
-            edificios = Edificios.objects.get(pk=pk)
-        except Edificios.DoesNotExist:
-            return Response({'error': 'Edificio no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        edificios.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class CasasAV(APIView):
+class CasasLiveView(APIView):
     def get(self, request):
         casas = Casas.objects.all()
-        serializer = CasasSerializer(casas, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = CasasSerializer(casas, many=True)
+        return render(request, 'casas.html', {'casas': serializer.data})
+    
+class CasasCreateView(APIView):
+    def get(self, request):
+        form = CasasForm()
+        return render(request, 'crear_casa.html', {'form': form})
     
     def post(self, request):
-        serializer = CasasSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class CasasDetalleAV(APIView):
-    def get(self, request, pk):
-        try:
-            casas = Casas.objects.get(pk=pk)
-        except Casas.DoesNotExist:
-            return Response({'error': 'Casa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = CasasSerializer(casas, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        form = CasasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/portal/casas/')
+        return render(request, 'crear_casa.html', {'form': form})
     
-    def put(self, request, pk):
-        try:
-            casas = Casas.objects.get(pk=pk)
-        except Casas.DoesNotExist:
-            return Response({'error': 'Casa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = CasasSerializer(casas, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, pk):
-        try:
-            casas = Casas.objects.get(pk=pk)
-        except Casas.DoesNotExist:
-            return Response({'error': 'Casa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        casas.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class FincasAV(APIView):
+class FincasLiveView(APIView):
     def get(self, request):
         fincas = Fincas.objects.all()
-        serializer = FincasSerializer(fincas, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = FincasSerializer(fincas, many=True)
+        return render(request, 'fincas.html', {'fincas': serializer.data})
+    
+class FincasCreateView(APIView):
+    def get(self, request):
+        form = FincasForm()
+        return render(request, 'crear_finca.html', {'form': form})
     
     def post(self, request):
-        serializer = FincasSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class FincasDetalleAV(APIView):
-    def get(self, request, pk):
-        try:
-            fincas = Fincas.objects.get(pk=pk)
-        except Fincas.DoesNotExist:
-            return Response({'error': 'Finca no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = FincasSerializer(fincas, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        form = FincasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/portal/fincas/')
+        return render(request, 'crear_finca.html', {'form': form})
     
-    def put(self, request, pk):
-        try:
-            fincas = Fincas.objects.get(pk=pk)
-        except Fincas.DoesNotExist:
-            return Response({'error': 'Finca no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = FincasSerializer(fincas, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, pk):
-        try:
-            fincas = Fincas.objects.get(pk=pk)
-        except Fincas.DoesNotExist:
-            return Response({'error': 'Finca no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        
-        fincas.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class PropietariosAV(APIView):
+class PropietariosLiveView(APIView):
     def get(self, request):
         propietarios = Propietarios.objects.all()
-        serializer = PropietariosSerializer(propietarios, many=True, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = PropietariosSerializer(propietarios, many=True)
+        return render(request, 'propietarios.html', {'propietarios': serializer.data})
+    
+class PropietariosCreateView(APIView):
+    def get(self, request):
+        form = PropietariosForm()
+        return render(request, 'crear_propietario.html', {'form': form})
     
     def post(self, request):
-        serializer = PropietariosSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class PropietariosDetalleAV(APIView):
-    def get(self, request, pk):
-        try:
-            propietarios = Propietarios.objects.get(pk=pk)
-        except Propietarios.DoesNotExist:
-            return Response({'error': 'Propietario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = PropietariosSerializer(propietarios, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    def put(self, request, pk):
-        try:
-            propietarios = Propietarios.objects.get(pk=pk)
-        except Propietarios.DoesNotExist:
-            return Response({'error': 'Propietario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = PropietariosSerializer(propietarios, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, pk):
-        try:
-            propietarios = Propietarios.objects.get(pk=pk)
-        except Propietarios.DoesNotExist:
-            return Response({'error': 'Propietario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        
-        propietarios.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+        form = PropietariosForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/portal/propietarios/')
+        return render(request, 'crear_propietario.html', {'form': form})
